@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
+public class MainActivity extends AppCompatActivity implements VirtualSensorEventListener {
 
     boolean isSensorLoggingInProgress;
     int accelerometerCounter, linearAccelerationCounter, gyroscopeCounter;
@@ -84,23 +84,26 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         File dir = new File(saveAsDirectoryName);
         dir.mkdirs();
 
-        if (accelerometerSwitch.isChecked()) {
-            sensorManager.registerListener(MainActivity.this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
 
+        if (accelerometerSwitch.isChecked()) {
+            VirtualSensorManager.registerListener(MainActivity.this, accelerometerSensor, "/data/user/0/com.example.sensorlogger/files/testfile_2020-11-22-03:02:29/accelerometer_2020-11-22-03:02:29.csv");
+            //sensorManager.registerListener(MainActivity.this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
             File accelerometerCSV = new File(saveAsDirectoryName, "accelerometer_" + saveAsDate + ".csv");
             accelerometerCSV.createNewFile();
             accelerometerWriter = new BufferedWriter(new FileWriter(accelerometerCSV));
             accelerometerWriter.write("#timestamp,x-value,y-value,z-value");
         }
         if (linearAccelerationSwitch.isChecked()) {
-            sensorManager.registerListener(MainActivity.this, linearAccelerationSensor, SensorManager.SENSOR_DELAY_NORMAL);
+            VirtualSensorManager.registerListener(MainActivity.this, linearAccelerationSensor, "/data/user/0/com.example.sensorlogger/files/testfile_2020-11-22-03:02:29/linearAcceleration_2020-11-22-03:02:29.csv");
+            // sensorManager.registerListener(MainActivity.this, linearAccelerationSensor, SensorManager.SENSOR_DELAY_NORMAL);
             File linearAccelerationCSV = new File(saveAsDirectoryName, "linearAcceleration_" + saveAsDate + ".csv");
             linearAccelerationCSV.createNewFile();
             linearAccelerationWriter = new BufferedWriter(new FileWriter(linearAccelerationCSV));
             linearAccelerationWriter.write("#timestamp,x-value,y-value,z-value");
         }
         if (gyroscopeSwitch.isChecked()) {
-            sensorManager.registerListener(MainActivity.this, gyroscopeSensor, SensorManager.SENSOR_DELAY_NORMAL);
+            VirtualSensorManager.registerListener(MainActivity.this, gyroscopeSensor, "/data/user/0/com.example.sensorlogger/files/testfile_2020-11-22-03:02:29/gyroscope_2020-11-22-03:02:29.csv");
+            // sensorManager.registerListener(MainActivity.this, gyroscopeSensor, SensorManager.SENSOR_DELAY_NORMAL);
             File gyroscopeCSV = new File(saveAsDirectoryName, "gyroscope_" + saveAsDate + ".csv");
             gyroscopeCSV.createNewFile();
             gyroscopeWriter = new BufferedWriter(new FileWriter(gyroscopeCSV));
@@ -127,9 +130,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         toggleSensorLoggingButton.setText("Start Sensor Logging");
     }
 
-
     @Override
-    public void onSensorChanged(SensorEvent event) {
+    public void onVirtualSensorChanged(VirtualSensorEvent event) {
         Sensor sensor = event.sensor;
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -151,6 +153,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
         statusTextView.setText(String.format("Accelerometer instances: %d\nLinear acceleration instances: %d\nGyroscope instances: %d", accelerometerCounter, linearAccelerationCounter, gyroscopeCounter));
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+
     }
 
     @Override
