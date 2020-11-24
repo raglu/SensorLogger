@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.hardware.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
+
+import com.example.sensorsimulator.VirtualSensorEvent;
+import com.example.sensorsimulator.VirtualSensorEventListener;
+import com.example.sensorsimulator.VirtualSensorManager;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -86,28 +89,28 @@ public class MainActivity extends AppCompatActivity implements VirtualSensorEven
 
 
         if (accelerometerSwitch.isChecked()) {
-            VirtualSensorManager.registerListener(MainActivity.this, accelerometerSensor, "/data/user/0/com.example.sensorlogger/files/testfile_2020-11-22-03:02:29/accelerometer_2020-11-22-03:02:29.csv");
             //sensorManager.registerListener(MainActivity.this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
             File accelerometerCSV = new File(saveAsDirectoryName, "accelerometer_" + saveAsDate + ".csv");
             accelerometerCSV.createNewFile();
             accelerometerWriter = new BufferedWriter(new FileWriter(accelerometerCSV));
             accelerometerWriter.write("#timestamp,x-value,y-value,z-value");
+            VirtualSensorManager.registerListener(MainActivity.this, accelerometerSensor, "/data/user/0/com.example.sensorlogger/files/testfile_2020-11-22-03:02:29/OnePlus6_Rasmus2_Accelerometer.csv");
         }
         if (linearAccelerationSwitch.isChecked()) {
-            VirtualSensorManager.registerListener(MainActivity.this, linearAccelerationSensor, "/data/user/0/com.example.sensorlogger/files/testfile_2020-11-22-03:02:29/linearAcceleration_2020-11-22-03:02:29.csv");
             // sensorManager.registerListener(MainActivity.this, linearAccelerationSensor, SensorManager.SENSOR_DELAY_NORMAL);
             File linearAccelerationCSV = new File(saveAsDirectoryName, "linearAcceleration_" + saveAsDate + ".csv");
             linearAccelerationCSV.createNewFile();
             linearAccelerationWriter = new BufferedWriter(new FileWriter(linearAccelerationCSV));
             linearAccelerationWriter.write("#timestamp,x-value,y-value,z-value");
+            VirtualSensorManager.registerListener(MainActivity.this, linearAccelerationSensor, "/data/user/0/com.example.sensorlogger/files/testfile_2020-11-22-03:02:29/OnePlus6_Rasmus2_LinearAcc.csv");
         }
         if (gyroscopeSwitch.isChecked()) {
-            VirtualSensorManager.registerListener(MainActivity.this, gyroscopeSensor, "/data/user/0/com.example.sensorlogger/files/testfile_2020-11-22-03:02:29/gyroscope_2020-11-22-03:02:29.csv");
             // sensorManager.registerListener(MainActivity.this, gyroscopeSensor, SensorManager.SENSOR_DELAY_NORMAL);
             File gyroscopeCSV = new File(saveAsDirectoryName, "gyroscope_" + saveAsDate + ".csv");
             gyroscopeCSV.createNewFile();
             gyroscopeWriter = new BufferedWriter(new FileWriter(gyroscopeCSV));
             gyroscopeWriter.write("#timestamp,x-value,y-value,z-value");
+            VirtualSensorManager.registerListener(MainActivity.this, gyroscopeSensor, "/data/user/0/com.example.sensorlogger/files/testfile_2020-11-22-03:02:29/OnePlus6_Rasmus2_Gyroscope.csv");
         }
 
         isSensorLoggingInProgress = true;

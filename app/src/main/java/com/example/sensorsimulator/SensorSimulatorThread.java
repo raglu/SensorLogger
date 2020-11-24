@@ -1,8 +1,6 @@
-package com.example.sensorlogger;
+package com.example.sensorsimulator;
 
 import android.hardware.Sensor;
-import android.hardware.SensorEventListener;
-import android.os.Environment;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -62,13 +60,13 @@ public class SensorSimulatorThread extends Thread {
     }
 
     public void run() {
-        for (VirtualSensorEvent sensorEvent : virtualSensorEvents) {
-            try {
+        try {
+			for (VirtualSensorEvent sensorEvent : virtualSensorEvents) {
                 TimeUnit.MILLISECONDS.sleep(sensorEvent.timeUntilEvent);
                 targetListener.onVirtualSensorChanged(sensorEvent);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+			}
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

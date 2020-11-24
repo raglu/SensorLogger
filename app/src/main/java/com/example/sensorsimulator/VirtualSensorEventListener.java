@@ -1,4 +1,4 @@
-package com.example.sensorlogger;
+package com.example.sensorsimulator;
 
 import android.hardware.SensorEventListener;
 
